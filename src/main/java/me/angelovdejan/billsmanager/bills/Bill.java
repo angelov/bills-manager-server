@@ -7,13 +7,14 @@ import javax.persistence.Id;
 
 @Entity
 public class Bill {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String title;
 
-    private Boolean paid = false;
+    private BillState state = BillState.NON_RECEIVED;
 
     public Long getId() {
         return id;
@@ -31,11 +32,11 @@ public class Bill {
         this.title = title;
     }
 
-    public Boolean isPaid() {
-        return paid;
+    public BillState getState() {
+        return state;
     }
 
-    public void setPaid(Boolean paid) {
-        this.paid = paid;
+    public void setState(BillState state) {
+        this.state = state;
     }
 }

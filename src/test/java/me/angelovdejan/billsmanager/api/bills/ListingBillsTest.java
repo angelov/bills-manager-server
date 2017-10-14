@@ -2,6 +2,7 @@ package me.angelovdejan.billsmanager.api.bills;
 
 import me.angelovdejan.billsmanager.BillsManagerApplication;
 import me.angelovdejan.billsmanager.bills.Bill;
+import me.angelovdejan.billsmanager.bills.BillState;
 import me.angelovdejan.billsmanager.bills.repositories.BillsRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -52,21 +53,21 @@ public class ListingBillsTest {
                 .andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[0].id", is(1)))
                 .andExpect(jsonPath("$[0].title", is("Electricity")))
-                .andExpect(jsonPath("$[0].paid", is(false)))
+                .andExpect(jsonPath("$[0].state", is("RECEIVED")))
                 .andExpect(jsonPath("$[1].id", is(2)))
                 .andExpect(jsonPath("$[1].title", is("House keeping")))
-                .andExpect(jsonPath("$[1].paid", is(true)));
+                .andExpect(jsonPath("$[1].state", is("PAID")));
     }
 
     private void insertDummyBills() {
         Bill b1 = new Bill();
         b1.setTitle("Electricity");
-        b1.setPaid(false);
+        b1.setState(BillState.RECEIVED);
         bills.save(b1);
 
         Bill b2 = new Bill();
         b2.setTitle("House keeping");
-        b2.setPaid(true);
+        b2.setState(BillState.PAID);
         bills.save(b2);
     }
 }
