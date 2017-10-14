@@ -32,7 +32,7 @@ public class BillsController {
     }
 
     @RequestMapping(value = "/{id}/changeState")
-    public ResponseEntity<Response> changeBillState(
+    public ResponseEntity<Response> changeState(
             @PathVariable(name = "id") String id,
             @RequestBody ChangeStateRequest request
             ) throws ResourceNotFoundException {
@@ -53,6 +53,13 @@ public class BillsController {
         bills.save(bill);
 
         return new ResponseEntity<>(new SuccessfulResponse("Bill state changed"), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/", method = RequestMethod.POST)
+    public ResponseEntity<Response> store(Bill bill) {
+        bills.save(bill);
+
+        return new ResponseEntity<>(new SuccessfulResponse("Bill stored successfully"), HttpStatus.OK);
     }
 
 }

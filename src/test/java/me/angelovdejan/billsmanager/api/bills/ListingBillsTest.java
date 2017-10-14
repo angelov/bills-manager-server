@@ -1,41 +1,15 @@
 package me.angelovdejan.billsmanager.api.bills;
 
-import me.angelovdejan.billsmanager.BillsManagerApplication;
+import me.angelovdejan.billsmanager.api.ApiTest;
 import me.angelovdejan.billsmanager.bills.Bill;
 import me.angelovdejan.billsmanager.bills.BillState;
-import me.angelovdejan.billsmanager.bills.repositories.BillsRepository;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
 import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = BillsManagerApplication.class)
-@WebAppConfiguration
-public class ListingBillsTest {
-
-    @Autowired
-    private WebApplicationContext webApplicationContext;
-
-    @Autowired
-    private BillsRepository bills;
-
-    private MockMvc mockMvc;
-
-    @Before
-    public void setupMockMvc() {
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-    }
+public class ListingBillsTest extends ApiTest {
 
     @Test
     public void it_returns_empty_array_if_there_are_no_bills() throws Exception {
@@ -70,4 +44,5 @@ public class ListingBillsTest {
         b2.setState(BillState.PAID);
         bills.save(b2);
     }
+
 }

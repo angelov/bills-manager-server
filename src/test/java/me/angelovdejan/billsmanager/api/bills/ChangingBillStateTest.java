@@ -1,24 +1,11 @@
 package me.angelovdejan.billsmanager.api.bills;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import me.angelovdejan.billsmanager.BillsManagerApplication;
+import me.angelovdejan.billsmanager.api.ApiTest;
 import me.angelovdejan.billsmanager.api.requests.ChangeStateRequest;
 import me.angelovdejan.billsmanager.bills.Bill;
 import me.angelovdejan.billsmanager.bills.BillState;
-import me.angelovdejan.billsmanager.bills.repositories.BillsRepository;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
-
-import java.util.logging.Logger;
 
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.Matchers.*;
@@ -26,23 +13,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = BillsManagerApplication.class)
-@WebAppConfiguration
-public class ChangingBillStateTest {
-
-    @Autowired
-    private WebApplicationContext webApplicationContext;
-
-    @Autowired
-    private BillsRepository bills;
-
-    private MockMvc mockMvc;
-
-    @Before
-    public void setupMockMvc() {
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-    }
+public class ChangingBillStateTest extends ApiTest {
 
     @Test
     public void trying_to_change_state_of_non_existing_bill() throws Exception {
@@ -86,17 +57,6 @@ public class ChangingBillStateTest {
         assertThat(b1.getState(), is(BillState.PAID));
     }
 
-    // took this from some SO answer
-    public static String asJsonString(final Object obj) {
-        try {
-            final ObjectMapper mapper = new ObjectMapper();
-            final String jsonContent = mapper.writeValueAsString(obj);
-            return jsonContent;
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     private Bill prepareBill() {
         return prepareBill(BillState.RECEIVED);
     }
@@ -110,4 +70,5 @@ public class ChangingBillStateTest {
 
         return bill;
     }
+
 }
